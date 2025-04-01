@@ -88,9 +88,6 @@ export const copyPagesToSite = async (options) => {
       json: (obj) => JSON.stringify(obj),
       "json-escaped": (obj) => encodeURIComponent(JSON.stringify(obj)),
       postDate: (dateObj) => {
-        console.log("POST DATE", {
-          dateObj,
-        });
         return DateTime.fromFormat(dateObj, "yyyy-MM-dd").toLocaleString(
           DateTime.DATE_MED
         );
