@@ -1,0 +1,14 @@
+<rtgl-text s="ll"><a href="{{ back.href }}">{{ back.text }}</a></rtgl-text>
+<rtgl-text s="dm" mt="l">{{ title }}</rtgl-text>
+<rtgl-view d="v" mt="l">
+  {{ subtitle }}
+</rtgl-view>
+<rtgl-view g="l" mt="xl">
+  {%- for item in items -%}
+
+  <rtgl-view flex="1">
+    <rtgl-text c="on-su" s="tm"><a href="{{ item.url }}">{{ item.title }}</a></rtgl-text>
+  </rtgl-view>
+
+  {%- endfor -%}
+</rtgl-view>

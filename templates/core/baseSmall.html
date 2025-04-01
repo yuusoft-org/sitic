@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% include "core/htmlHeader.html" %}
+</head>
+<body>
+<rtgl-view bgc="su" w="f" ah="c">
+  <rtgl-view md-w="100vw" w="768" p="l">
+    <rtgl-view h="48"></rtgl-view>
+    {{ content }}
+  </rtgl-view>
+  {% include "core/footer.html" %}
+</rtgl-view>
+{% include "core/header.html" %}
+</body>
+</html>

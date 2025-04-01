@@ -1,0 +1,49 @@
+{
+  "name": "sitic",
+  "version": "0.0.1",
+  "description": "Generate static sites using Markdown and YAML. Straightforward, zero-complexity. Complete toolkit for landing pages, blogs, documentation, admin dashboards, and more.",
+  "author": {
+    "name": "Luciano Hanyon Wu",
+    "email": "han4wluc@yuusoft.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuusoft-org/sitic.git"
+  },
+  "files": [
+    "src",
+    "components",
+    "templates"
+  ],
+  "dependencies": {
+    "commander": "^13.1.0",
+    "js-yaml": "^4.1.0",
+    "liquidjs": "^10.21.0",
+    "markdown-it": "^14.1.0"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.8"
+  },
+  "type": "module",
+  "bin": {
+    "sitic": "src/cli.js"
+  },
+  "license": "MIT",
+  "keywords": [
+    "static",
+    "site",
+    "generator",
+    "markdown",
+    "yaml",
+    "landing",
+    "page",
+    "blog",
+    "documentation",
+    "admin",
+    "dashboard"
+  ],
+  "bugs": {
+    "url": "https://github.com/yuusoft-org/sitic/issues"
+  },
+  "homepage": "https://github.com/yuusoft-org/sitic#readme"
+}

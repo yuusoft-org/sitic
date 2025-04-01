@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  {% include "core/htmlHeader.html" %}
+  {% include "core/tableOfContentsHeader.html" %}
+</head>
+<body>
+<rtgl-view bgc="su" w="f" ah="c">
+  <rtgl-view md-w="100vw" w="768" p="l">
+    <rtgl-view h="96"></rtgl-view>
+    <rtgl-text s="ll"><a href="/agreement">Back</a></rtgl-text>
+    <rtgl-text s="dm" mt="l">{{ title }}</rtgl-text>
+    <rtgl-text s="sm" mt="s">{{ date }}</rtgl-text>
+    <rtgl-view mt="l">
+      {{ content }}
+      <rtgl-view h="30vh"></rtgl-view>
+    </rtgl-view>
+  </rtgl-view>
+  <rtgl-view pos="fix" cor="right" style="top: 32px" sv w="256" h="100vh" p="xl" g="l" xl-hidden>
+    {% include "core/tableOfContents.html" %}
+  </rtgl-view>
+  {% include "core/footer.html" %}
+</rtgl-view>
+{% include "core/header.html" %}
+</body>
+</html>

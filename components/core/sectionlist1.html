@@ -1,0 +1,13 @@
+<rtgl-view g="xl" w="f" mv="l">
+  <rtgl-text s="tl">{{ sectionTitle }}</rtgl-text>
+  {% for item in items %}
+  <a href="{{ item.href }}" style="display: contents;">
+    <rtgl-view bgc="suc" bc="o" bw="s" br="m" p="m" w="f" g="xs">
+      <rtgl-view d="h" g="m">
+        <rtgl-text s="tl">{{ item.label }}</rtgl-text>
+      </rtgl-view>
+      <rtgl-text s="bm">{{ item.description }}</rtgl-text>
+    </rtgl-view>
+  </a>
+  {% endfor %}
+</rtgl-view>

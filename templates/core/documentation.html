@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  {% include "core/htmlHeader.html" %}
+  {% include "core/tableOfContentsHeader.html" %}
+</head>
+
+<body>
+  <rtgl-view bgc="su" w="f" ah="c" h="f">
+    <rtgl-view d="h" w="f" h="f">
+      <rtgl-view bgc="" sv w="288" h="100vh" lg-hidden bwl="xs" bwr="xs" bc="ov">
+        <rtgl-view d="h" h="48" av="c" p="l">
+          <a href="/" style="display: contents;">
+            <rtgl-image src="{{ header.logoSrc }}" h="16"></rtgl-image>
+          </a>
+          <rtgl-view h="24" w="1" mh="m" bgc="suc"></rtgl-view>
+          <rtgl-view><rtgl-text s="bm"><a href="/docs" style="display: contents;">Docs</a></rtgl-text> </rtgl-view>
+        </rtgl-view>
+
+        {% for section in docs.sections %}
+        <rtgl-view h="32" av="c" w="f">
+          <rtgl-view w="f" h="32" av="c" pl="l">
+            <rtgl-text s="bm" c="on-suv">{{ section.title }}</rtgl-text>
+          </rtgl-view>
+        </rtgl-view>
+
+        {% for item in section.items %}
+        <a href="{{ item.url }}" style="display: contents;">
+          <rtgl-view w="f" h="32" av="c" bgc="{% if item.url == url %}suc{% endif %}" h-bgc="such" h-cur="p" pl="xl">
+            <rtgl-text s="bm" c="on-su">{{ item.title }}</rtgl-text>
+          </rtgl-view>
+        </a>
+        {% endfor %}
+        {% endfor %}
+
+      </rtgl-view>
+      <rtgl-view flex="1" ah="c" h="100vh" sv>
+        <rtgl-view md-w="100vw" w="720" ph="xl">
+          {{ content }}
+          <rtgl-view h="50vh"></rtgl-view>
+        </rtgl-view>
+      </rtgl-view>
+      <rtgl-view sv w="256" h="100vh" p="xl" g="l" xl-hidden>
+        {% include "core/tableOfContents.html" %}
+      </rtgl-view>
+    </rtgl-view>
+  </rtgl-view>
+</body>
+
+</html>
