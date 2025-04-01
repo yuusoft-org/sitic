@@ -1,7 +1,7 @@
 {
   "name": "sitic",
-  "version": "0.0.1",
-  "description": "Generate static sites using Markdown and YAML. Straightforward, zero-complexity. Complete toolkit for landing pages, blogs, documentation, admin dashboards, and more.",
+  "version": "0.0.2",
+  "description": "Generate static sites using Markdown and YAML. Straightforward, zero-complexity. Complete toolkit for landing pages, blogs, documentation, admin dashboards, and more.git remote add origin git@github.com:yuusoft-org/sitic.git",
   "author": {
     "name": "Luciano Hanyon Wu",
     "email": "han4wluc@yuusoft.com"
@@ -19,6 +19,7 @@
     "commander": "^13.1.0",
     "js-yaml": "^4.1.0",
     "liquidjs": "^10.21.0",
+    "luxon": "^3.6.1",
     "markdown-it": "^14.1.0"
   },
   "devDependencies": {
