@@ -113,21 +113,28 @@ export const isObject = (item) => {
 
 // Helper function for deep merging objects
 export const deepMerge = (target, ...sources) => {
-  if (!sources.length) return target;
+  // Create a clone of the target to avoid mutation
+  const result = isObject(target) ? { ...target } : target;
+
+  if (!sources.length) return result;
   const source = sources.shift();
 
-  if (isObject(target) && isObject(source)) {
+  if (isObject(result) && isObject(source)) {
     for (const key in source) {
       if (isObject(source[key])) {
-        if (!target[key]) Object.assign(target, { [key]: {} });
-        deepMerge(target[key], source[key]);
+        // Create or use existing object (without mutation)
+        result[key] = result[key] || {};
+        // Recursively merge the nested object
+        result[key] = deepMerge(result[key], source[key]);
       } else {
-        Object.assign(target, { [key]: source[key] });
+        // Simple assignment for non-objects
+        result[key] = source[key];
       }
     }
   }
 
-  return deepMerge(target, ...sources);
+  // Process any remaining sources recursively
+  return sources.length ? deepMerge(result, ...sources) : result;
 };
 
 export const createTemplateRenderer = (options = {}) => {
@@ -260,7 +267,7 @@ export const configureMarkdown = ({ yamlComponentRenderer }) => {
 
     return content;
   };
-  
+
   return md;
 };
 
@@ -506,7 +513,11 @@ export const createFileFormatHandlers = ({
         }
 
         if (!layoutName) {
-          throw new Error(`Layout not found for ${srcPath}, ${JSON.stringify(frontmatterData)}`);
+          throw new Error(
+            `Layout not found for ${srcPath}, ${JSON.stringify(
+              frontmatterData
+            )}`
+          );
         }
 
         // Generate table of contents from markdown content
@@ -536,7 +547,7 @@ export const createFileFormatHandlers = ({
             url: frontmatterData.url || "/", // Explicitly include the URL with default
           },
           {
-            siticEnv: process.env
+            siticEnv: process.env,
           }
         );
 
