@@ -2,7 +2,6 @@ import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 import { DateTime } from "luxon";
 
-
 // Create the equivalent of __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -88,11 +87,13 @@ export const copyPagesToSite = async (options) => {
     filters: {
       json: (obj) => JSON.stringify(obj),
       "json-escaped": (obj) => encodeURIComponent(JSON.stringify(obj)),
-      "postDate": (dateObj) => {
-        console.log('POST DATE', {
-          dateObj
-        })
-        return DateTime.fromFormat(dateObj, 'yyyy-MM-dd').toLocaleString(DateTime.DATE_MED);
+      postDate: (dateObj) => {
+        console.log("POST DATE", {
+          dateObj,
+        });
+        return DateTime.fromFormat(dateObj, "yyyy-MM-dd").toLocaleString(
+          DateTime.DATE_MED
+        );
       },
     },
   });
@@ -137,9 +138,7 @@ export const copyPagesToSite = async (options) => {
   try {
     await createFolderIfNotExists(outputPath);
     await copyDirRecursive(pagesPath, outputPath, fileFormatHandlers);
-    console.log(
-      `Pages copied from ${pagesPath} to ${outputPath} successfully`
-    );
+    console.log(`Pages copied from ${pagesPath} to ${outputPath} successfully`);
   } catch (error) {
     console.error(
       `Error copying pages from ${pagesPath} to ${outputPath}:`,
