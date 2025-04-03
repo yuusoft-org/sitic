@@ -4,6 +4,7 @@ import {
   readdir,
   writeFile,
   copyFile,
+  rm,
 } from "node:fs/promises";
 import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { join } from "node:path";
@@ -603,6 +604,8 @@ export const createFileFormatHandlers = ({
       },
       // Output extension for the processed file
       outputExt: "html",
+      // Always create folder with index.html for markdown files
+      forceFolderWithIndex: true,
     },
 
     // Handler for HTML files
@@ -618,6 +621,8 @@ export const createFileFormatHandlers = ({
         return minified;
       },
       outputExt: "html",
+      // Always create folder with index.html for HTML files
+      forceFolderWithIndex: true,
     },
 
     // Handler for CSS files
@@ -668,18 +673,29 @@ const processFile = async (
       // If it's an index file, output to index.{outputExt} in the same directory
       destPath = join(destDir, `index.${outputExt}`);
     } else {
-      // For other files, create a directory with their name
-      const baseName =
-        srcPath
-          .split("/")
-          .pop()
-          ?.replace(new RegExp(`\\.${ext}$`), "") || "";
-      const newDestDir = join(destDir, baseName);
+      // Check if this handler should use folder with index.html approach
+      if (handler.forceFolderWithIndex) {
+        // Create a directory with the file name
+        const baseName =
+          srcPath
+            .split("/")
+            .pop()
+            ?.replace(new RegExp(`\\.${ext}$`), "") || "";
+        const newDestDir = join(destDir, baseName);
 
-      // Create directory if it doesn't exist
-      await createFolderIfNotExists(newDestDir);
+        // Create directory if it doesn't exist
+        await createFolderIfNotExists(newDestDir);
 
-      destPath = join(newDestDir, `index.${outputExt}`);
+        destPath = join(newDestDir, `index.${outputExt}`);
+      } else {
+        // For other file types, just output to the destination directory with the same name
+        const baseName =
+          srcPath
+            .split("/")
+            .pop()
+            ?.replace(new RegExp(`\\.${ext}$`), "") || "";
+        destPath = join(destDir, `${baseName}.${outputExt}`);
+      }
     }
 
     // Write the processed content to the new file
@@ -734,6 +750,10 @@ const copyFileWithProcessing = async (
  * @param {string} dest - Destination directory
  */
 export const copyDirRecursive = async (src, dest, fileFormatHandlers) => {
+  // Remove the destination directory first to ensure a clean copy
+  await rm(dest, { recursive: true, force: true });
+  
+  // Create the destination directory fresh
   await createFolderIfNotExists(dest);
 
   try {
