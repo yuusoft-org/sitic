@@ -18,6 +18,7 @@ import {
   loadItems,
   copyDirRecursive,
 } from "./common.js";
+import { rm } from "fs/promises";
 
 /**
  * Copy pages to site with processing
@@ -133,6 +134,7 @@ export const copyPagesToSite = async (options) => {
   });
 
   try {
+    await rm(outputPath, { recursive: true, force: true });
     await createFolderIfNotExists(outputPath);
     await copyDirRecursive(pagesPath, outputPath, fileFormatHandlers);
     console.log(`Pages copied from ${pagesPath} to ${outputPath} successfully`);
