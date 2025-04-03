@@ -20,7 +20,7 @@
 
   <rtgl-view lg-h="calc((100vw - 32px) / 1.777)" lg-w="calc(100vw - 32px)" h="calc(66.66vw / 1.777)" w="66.66vw" bc="ov"
     bw="xs" br="xs" shadow="s">
-    <video playsinline loop controls width="100%">
+    <video playsinline loop controls width="100%" aria-label="{{ hero.video.title | default: 'Video content' }}">
       <source src="{{ hero.video.url }}" type="video/mp4">
     </video>
   </rtgl-view>

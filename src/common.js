@@ -6,10 +6,14 @@ import {
   copyFile,
 } from "node:fs/promises";
 import { readFileSync, readdirSync, existsSync } from "node:fs";
+import { join } from "node:path";
+
+import { minify } from "html-minifier-terser";
 import yaml from "js-yaml";
 import { Liquid } from "liquidjs";
 import MarkdownIt from "markdown-it";
-import { join } from "node:path";
+// Try to get CleanCSS from html-minifier-terser's dependencies
+import CleanCSS from "clean-css";
 
 /**
  * Helper function to safely load YAML
@@ -243,10 +247,39 @@ export const configureMarkdown = ({ yamlComponentRenderer }) => {
 
   // Link configuration - add target="_blank" to all external links
   md.renderer.rules.link_open = (tokens, idx, options, env, self) => {
-    const targetIndex = tokens[idx].attrIndex("target");
-    if (targetIndex < 0) {
-      tokens[idx].attrPush(["target", "_blank"]);
+    const token = tokens[idx];
+    const targetIndex = token.attrIndex("target");
+    const href =
+      (token.attrs && token.attrs.find((attr) => attr[0] === "href")?.[1]) ||
+      "";
+    const isExternal = href.startsWith("http") || href.startsWith("//");
+
+    // If this is an external link or already has target="_blank"
+    if (isExternal || targetIndex >= 0) {
+      if (targetIndex < 0) {
+        token.attrPush(["target", "_blank"]);
+      }
+      token.attrPush(["rel", "noreferrer"]);
+
+      // Find the next text token to use for the aria-label
+      let nextIdx = idx + 1;
+      let textContent = "";
+      while (nextIdx < tokens.length && tokens[nextIdx].type !== "link_close") {
+        if (tokens[nextIdx].type === "text") {
+          textContent += tokens[nextIdx].content;
+        }
+        nextIdx++;
+      }
+
+      // Add aria-label for external links
+      if (textContent.trim() && token.attrIndex("aria-label") < 0) {
+        token.attrPush([
+          "aria-label",
+          `${textContent.trim()} (opens in new tab)`,
+        ]);
+      }
     }
+
     return self.renderToken(tokens, idx, options);
   };
 
@@ -552,11 +585,52 @@ export const createFileFormatHandlers = ({
         );
 
         // Render the content within the layout
-        return await liquidParse(layoutContent, layoutData);
+        const renderedHtml = await liquidParse(layoutContent, layoutData);
+
+        // Minify the HTML
+        const minifiedHtml = await minify(renderedHtml, {
+          collapseWhitespace: true,
+          removeComments: true,
+          minifyCSS: true,
+          minifyJS: true,
+          removeRedundantAttributes: true,
+          removeScriptTypeAttributes: true,
+          removeStyleLinkTypeAttributes: true,
+          useShortDoctype: true,
+        });
+
+        return minifiedHtml;
       },
       // Output extension for the processed file
       outputExt: "html",
     },
+
+    // Handler for HTML files
+    html: {
+      process: async (content) => {
+        // Minify HTML files
+        const minified = await minify(content, {
+          collapseWhitespace: true,
+          removeComments: true,
+          minifyCSS: true,
+          minifyJS: true,
+        });
+        return minified;
+      },
+      outputExt: "html",
+    },
+
+    // Handler for CSS files
+    css: {
+      process: async (content) => {
+        // Create a new CleanCSS instance
+        const cleanCSS = new CleanCSS();
+        // Minify the CSS
+        return cleanCSS.minify(content).styles;
+      },
+      outputExt: "css",
+    },
+
     // Add more handlers as needed, e.g.:
     // 'scss': { process: async (content) => { /* process scss */ }, outputExt: 'css' }
   };

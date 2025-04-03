@@ -17,7 +17,7 @@
       </ul>
     </rtgl-view>
     <rtgl-view flex="3" style="min-width: 320px; overflow: hidden;" bc="o" bw="xs" br="s">
-      <rtgl-image src="{{ feature.picture }}" w="f"></rtgl-image>
+      <rtgl-image src="{{ feature.picture }}" w="f" alt="{{ feature.imageAlt | default: feature.title }}"></rtgl-image>
     </rtgl-view>
   </rtgl-view>
 </rtgl-view>
