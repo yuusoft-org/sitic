@@ -2,8 +2,8 @@
 <rtgl-view h="1" bgc="suc" w="f"></rtgl-view>
 <rtgl-view g="l" d="h" p="l" md-w="100vw" lg-w="768" w="1024" pv="xl">
   <rtgl-view g="xl" flex="1" ah="s">
-    <a href="/" aria-label="Home" style="display: contents; text-decoration: none; color: inherit;"><rtgl-image h="20"
-        w="110" src="{{ footer.logo.src }}" alt="{{ footer.logo.alt | default: 'Company logo' }}">
+    <a href="/" aria-label="Home" style="display: contents; text-decoration: none; color: inherit;"><rtgl-image h="{{ footer.logo.height }}"
+        w="{{ footer.logo.width }}" src="{{ footer.logo.src }}" alt="{{ footer.logo.alt | default: 'Company logo' }}">
       </rtgl-image></a>
     <rtgl-view d="h" g="l" av="c">
       {%- for social in footer.social -%}
