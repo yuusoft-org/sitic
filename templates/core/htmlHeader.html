@@ -1,8 +1,10 @@
 <meta charset="utf-8" />
-<link rel="canonical" href="{{ canonicalUrl }}" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/x-icon" href="/public/favicon.png">
 <title>{{ title }}</title>
+<meta name="description" content="{{ og.description }}" />
+<link rel="icon" type="image/x-icon" href="/public/favicon.png">
+
+<!-- Open Graph tags -->
 <meta property="og:title" content="{{ og.title | default: title }}" />
 <meta property="og:description" content="{{ og.description }}" />
 <meta property="og:site_name" content="{{ og.siteName }}" />
@@ -13,11 +15,16 @@
 <meta property="og:image:height" content="{{ og.imageHeight | default: '630' }}" />
 <meta property="og:image:alt" content="{{ og.imageAlt }}" />
 <meta property="og:image:type" content="{{ og.imageType }}" />
+
+<!-- Twitter Card tags -->
 <meta name="twitter:card" content="{{ twitter.card | default: 'summary_large_image' }}" />
 <meta name="twitter:title" content="{{ og.title }}" />
 <meta name="twitter:description" content="{{ og.description }}" />
 <meta name="twitter:image" content="{{ og.image }}" />
 <meta name="twitter:image:alt" content="{{ og.alt }}" />
-<script src="https://cdn.jsdelivr.net/npm/rettangoli-ui@0.0.10-rc4/dist/rettangoli-iife-ui.min.js"></script>
+
+<!-- Styles and scripts -->
 <script src="/public/rtgl-icons.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/construct-style-sheets-polyfill@3.1.0/dist/adoptedStyleSheets.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/rettangoli-ui@0.0.10-rc4/dist/rettangoli-iife-ui.min.js"></script>
 <link href="/public/theme.css" rel="stylesheet" />
