@@ -750,10 +750,6 @@ const copyFileWithProcessing = async (
  * @param {string} dest - Destination directory
  */
 export const copyDirRecursive = async (src, dest, fileFormatHandlers) => {
-  // Remove the destination directory first to ensure a clean copy
-  await rm(dest, { recursive: true, force: true });
-  
-  // Create the destination directory fresh
   await createFolderIfNotExists(dest);
 
   try {
