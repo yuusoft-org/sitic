@@ -209,6 +209,15 @@ const generateUrlFromPath = (basePath, filePath) => {
     url = "/";
   }
 
+  if (url === "/index") {
+    url = "/";
+  }
+
+  // Ensure URL ends with '/' unless it's the root URL which already has it
+  if (url !== "/" && !url.endsWith("/")) {
+    url = url + "/";
+  }
+
   return url;
 };
 
@@ -470,7 +479,7 @@ export const loadCollections = async (basePath) => {
       const pageData = {
         ...frontmatterData,
         content: contentWithoutFrontmatter,
-        url,
+        url
       };
 
       // Add to the 'all' collection
