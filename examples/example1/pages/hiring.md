@@ -9,7 +9,7 @@ title: Sitic - Hiring
 - component: core/spacer
   data:
     height: 24
-- component: core/articlelist1
+- component: core/articlelist
   data:
     title: RouteVN - Hiring
     subtitle: Are you interested in workng for RouteVN? We are hiring for the following positions.

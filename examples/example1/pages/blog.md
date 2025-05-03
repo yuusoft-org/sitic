@@ -9,7 +9,7 @@ title: Sitic Blog
 - component: core/spacer
   data:
     height: 24
-- component: core/articlelist1
+- component: core/articlelist
   data:
     title: Blog List Title
     subtitle: Latest news and updates from this blog
