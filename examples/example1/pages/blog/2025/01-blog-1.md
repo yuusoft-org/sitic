@@ -1,5 +1,8 @@
 ---
-layout: core/blogPost
+layout: core/article
+layoutConfiguration:
+  back:
+    href: /blog/
 author: Sample Author
 title: Blog Article One
 description: "Sample description"

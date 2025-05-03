@@ -1,6 +1,8 @@
 ---
-layout: core/baseSmall
-title: RouteVN - Hiring
+layout: core/base
+layoutConfiguration:
+  size: small
+title: Sitic - Hiring
 ---
 
 ```yaml components

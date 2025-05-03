@@ -1,6 +1,8 @@
 ---
-layout: core/baseSmall
-title: RouteVN Index
+layout: core/base
+layoutConfiguration:
+  size: small
+title: Sitic Index
 ---
 
 ```yaml components

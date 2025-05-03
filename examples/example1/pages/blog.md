@@ -1,6 +1,8 @@
 ---
-layout: core/baseSmall
-title: RouteVN Blog
+layout: core/base
+layoutConfiguration:
+  size: small
+title: Sitic Blog
 ---
 
 ```yaml components
@@ -13,7 +15,7 @@ title: RouteVN Blog
     subtitle: Latest news and updates from this blog
     back:
       href: /
-      text: Back
+      label: Back
     items: {{ collections['blog-post'] | json }}
 - component: core/spacer
   data:

@@ -1,5 +1,8 @@
 ---
-layout: core/hiringPost
+layout: core/article
+layoutConfiguration:
+  back:
+    href: /hiring/
 title: Internship Position
 tags: [hiring]
 ---
