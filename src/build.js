@@ -89,14 +89,28 @@ export const copyPagesToSite = async (options) => {
       json: (obj) => JSON.stringify(obj),
       "json-escaped": (obj) => encodeURIComponent(JSON.stringify(obj)),
       postDate: (dateObj) => {
-        return DateTime.fromFormat(dateObj, "yyyy-MM-dd").toLocaleString(
-          DateTime.DATE_MED
-        );
+        if (!dateObj || typeof dateObj !== 'string') {
+          return ''; // Return empty string or some default value if dateObj is undefined or not a string
+        }
+        try {
+          return DateTime.fromFormat(dateObj, "yyyy-MM-dd").toLocaleString(
+            DateTime.DATE_MED
+          );
+        } catch (error) {
+          console.error(`Error formatting date "${dateObj}":`, error.message);
+          return dateObj; // Return the original date string if parsing fails
+        }
       },
     },
   });
 
-  const data = safeYamlLoad(liquidParse(inputYaml, { collections }));
+  let data;
+  try {
+    data = safeYamlLoad(liquidParse(inputYaml, { collections }));
+  } catch (error) {
+    console.error("Error creating template renderer:", error);
+    throw error;
+  }
 
   // Create global data object for templates
   const globalData = {

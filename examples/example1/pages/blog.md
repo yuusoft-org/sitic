@@ -1,0 +1,21 @@
+---
+layout: core/baseSmall
+title: RouteVN Blog
+---
+
+```yaml components
+- component: core/spacer
+  data:
+    height: 24
+- component: core/articlelist1
+  data:
+    title: Blog List Title
+    subtitle: Latest news and updates from this blog
+    back:
+      href: /
+      text: Back
+    items: {{ collections['blog-post'] | json }}
+- component: core/spacer
+  data:
+    height: 100
+``` 

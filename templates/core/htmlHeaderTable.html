@@ -42,9 +42,8 @@ const RettangoliTable = ({ render, html, baseClass }) => {
       return html`
         <rtgl-view sh h="calc(100vh - 48px)" w="calc(100vw - 200px - 32px)">
           <rtgl-view
-            bgc="ov"
+            bgc="bg"
             d="h"
-            bc="ov"
             style="flex-wrap: nowrap; position: sticky; top: 0; z-index: 2;"
           >
             ${columns.map((column, index) => {
@@ -57,14 +56,13 @@ const RettangoliTable = ({ render, html, baseClass }) => {
                   ph="m"
                   pv="s"
                   h="f"
-                  bgc="su"
+                  bgc="bg"
                   w=${column.width}
                   style=${style}
                   bwl=${isFirst ? "xs" : ""}
                   bwr="xs"
                   bwb="xs"
                   bwt="xs"
-                  bc="ov"
                 >
                   <rtgl-text s="ll">${column.label}</rtgl-text>
                 </rtgl-view>
@@ -86,9 +84,8 @@ const RettangoliTable = ({ render, html, baseClass }) => {
                         ph="m"
                         pv="s"
                         h="f"
-                        bgc="su"
+                        bgc="bg"
                         w=${column.width}
-                        bc="ov"
                         bwr="xs"
                         bwl=${isFirst ? "xs" : ""}
                         bwb="xs"
