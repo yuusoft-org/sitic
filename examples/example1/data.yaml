@@ -11,6 +11,12 @@ og:
 navbar:
   title:
     label: Sitic Template
+    href: '/'
+    image:
+      src: /public/sample1.jpg
+      alt: Logo
+      width: 32
+      height: 32
 
 footer:
   logo:
@@ -20,9 +26,7 @@ footer:
     height: 20
 
   social:
-    - svg: discord
-      href: '/'
-    - svg: x
+    - svg: github
       href: '/'
   columns:
     - links:
@@ -43,6 +47,14 @@ footer:
           href: '/'
           newTab: true
 docs:
+  title:
+    label: Sitic Template
+    href: '/'
+    image:
+      src: /public/sample1.jpg
+      alt: Logo
+      width: 32
+      height: 32
   items:
     - title: "Getting Started"
       type: groupLabel
@@ -57,6 +69,14 @@ docs:
         - title: "Docs 3"
           slug: "/docs/docs3"
 admin:
+  title:
+    label: Sitic Template
+    href: '/'
+    image:
+      src: /public/sample1.jpg
+      alt: Logo
+      width: 32
+      height: 32
   items:
     - title: Sales
       type: groupLabel

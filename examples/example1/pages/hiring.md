@@ -11,8 +11,8 @@ title: Sitic - Hiring
     height: 24
 - component: core/articlelist
   data:
-    title: RouteVN - Hiring
-    subtitle: Are you interested in workng for RouteVN? We are hiring for the following positions.
+    title: Hiring
+    subtitle: For for an amazing team
     back:
       href: /
       text: Back

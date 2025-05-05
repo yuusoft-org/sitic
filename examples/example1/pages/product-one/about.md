@@ -56,5 +56,5 @@ title: Lorem ipsum
       description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
       cta:
         text: Take Your Action Now
-        href: https://tally.so/r/wvJLO0
+        href: '/'
 ``` 
