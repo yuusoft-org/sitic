@@ -1,6 +1,6 @@
 ---
 layout: core/base
-title: RouteVN Publisher
+title: Sitic Template
 ---
 
 ```yaml components
