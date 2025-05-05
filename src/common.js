@@ -12,7 +12,7 @@ import { join } from "node:path";
 import { minify } from "html-minifier-terser";
 import yaml from "js-yaml";
 import { Liquid } from "liquidjs";
-import MarkdownIt from "./markdownItAsync";
+import MarkdownIt from "./markdownItAsync.js";
 import { codeToHtml } from "shiki";
 
 // Try to get CleanCSS from html-minifier-terser's dependencies
