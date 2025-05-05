@@ -27,5 +27,22 @@
 <!-- Styles and scripts -->
 <script src="/public/rtgl-icons.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/construct-style-sheets-polyfill@3.1.0/dist/adoptedStyleSheets.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/rettangoli-ui@0.0.10-rc4/dist/rettangoli-iife-ui.min.js"></script>
+<script src="http://localhost:3000/public/rettangoli.js"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const pageOutline = document.getElementById('page-outline');
+    const content = document.getElementById('content-container');
+    if (pageOutline && content) {
+      pageOutline.connectedCallback();
+      pageOutline.startListening(content);
+    }
+
+    if (location.hash) {
+      const el = document.getElementById(location.hash.substring(1));
+      if (el) {
+        el.scrollIntoView({ behavior: 'auto' });
+      }
+    }
+  });
+</script>
 <link href="/public/theme.css" rel="stylesheet" />
