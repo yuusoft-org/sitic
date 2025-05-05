@@ -1,3 +1,8 @@
+/**
+ * Code taken from https://github.com/antfu/markdown-it-async
+ * Modified to remove <pre>... wrapper
+ */
+
 import type {
   PluginSimple as MarkdownItPluginSimple,
   PluginWithOptions as MarkdownItPluginWithOptions,
