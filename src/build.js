@@ -87,7 +87,12 @@ export const copyPagesToSite = async (options) => {
     templates,
     filters: {
       json: (obj) => JSON.stringify(obj),
-      "json-escaped": (obj) => encodeURIComponent(JSON.stringify(obj)),
+      "json-escaped": (obj) => {
+        if (!obj) {
+          return "";
+        }
+        return encodeURIComponent(JSON.stringify(obj));
+      },
       postDate: (dateObj) => {
         if (!dateObj || typeof dateObj !== 'string') {
           return ''; // Return empty string or some default value if dateObj is undefined or not a string

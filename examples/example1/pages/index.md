@@ -5,7 +5,7 @@ layoutConfiguration:
 title: Sitic Index
 ---
 
-```yaml components
+```yaml components=true
 - component: core/spacer
   data:
     height: 100

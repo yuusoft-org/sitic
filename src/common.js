@@ -12,7 +12,9 @@ import { join } from "node:path";
 import { minify } from "html-minifier-terser";
 import yaml from "js-yaml";
 import { Liquid } from "liquidjs";
-import MarkdownIt from "markdown-it";
+import MarkdownIt from "./markdownItAsync";
+import { codeToHtml } from "shiki";
+
 // Try to get CleanCSS from html-minifier-terser's dependencies
 import CleanCSS from "clean-css";
 
@@ -223,10 +225,39 @@ const generateUrlFromPath = (basePath, filePath) => {
 
 /**
  * Configure Markdown renderer with custom elements and styling
- * @returns {MarkdownIt} Configured MarkdownIt instance
  */
 export const configureMarkdown = ({ yamlComponentRenderer }) => {
-  const md = new MarkdownIt();
+  const md = MarkdownIt({
+    async highlight(code, lang, attrs) {
+      if (attrs.includes("components")) {
+        try {
+          return yamlComponentRenderer(code);
+        } catch (error) {
+          console.error(error);
+          process.exit(1);
+        }
+      }
+      if (attrs.includes("codePreview")) {
+        const formattedCode = await codeToHtml(code, {
+          lang,
+          theme: "slack-dark",
+        });
+        return `
+        <rtgl-view w="f" bw="xs" br="m">
+          <rtgl-view w="f" p="l">
+          ${code}
+          </rtgl-view>
+          <rtgl-view h="1" w="f" bgc="bo"></rtgl-view>
+          <rtgl-view w="f" d="h">
+          ${formattedCode}
+          </rtgl-view>
+        </rtgl-view>`
+        ;
+      }
+      return await codeToHtml(code, { lang, theme: "slack-dark" });
+    },
+    warnOnSyncRender: true,
+  });
 
   // Header configuration
   md.renderer.rules.heading_open = (tokens, idx, options, env, self) => {
@@ -246,13 +277,11 @@ export const configureMarkdown = ({ yamlComponentRenderer }) => {
   md.renderer.rules.heading_close = () => "</a></rtgl-text>\n";
 
   // Paragraph configuration
-  md.renderer.rules.paragraph_open = () =>
-    `<rtgl-text s="bl" mb="l">`;
+  md.renderer.rules.paragraph_open = () => `<rtgl-text s="bl" mb="l">`;
   md.renderer.rules.paragraph_close = () => "</rtgl-text>\n";
 
   // Table configuration
-  md.renderer.rules.table_open = () =>
-    '<rtgl-view style="max-width: calc(100vw - 32px);overflow-x: scroll;">\n<table>';
+  md.renderer.rules.table_open = () => '<rtgl-view w="f">\n<table>';
   md.renderer.rules.table_close = () => "</table>\n</rtgl-view>";
 
   // Link configuration - add target="_blank" to all external links
@@ -291,24 +320,6 @@ export const configureMarkdown = ({ yamlComponentRenderer }) => {
     }
 
     return self.renderToken(tokens, idx, options);
-  };
-
-  // Custom component handling for code blocks
-  md.renderer.rules.fence = (tokens, idx, options, env, self) => {
-    const token = tokens[idx];
-    const content = token.content;
-    const langInfo = token.info.trim();
-
-    if (langInfo === "yaml components") {
-      try {
-        return yamlComponentRenderer(content);
-      } catch (error) {
-        console.error(error);
-        process.exit(1);
-      }
-    }
-
-    return content;
   };
 
   return md;
@@ -479,7 +490,7 @@ export const loadCollections = async (basePath) => {
       const pageData = {
         ...frontmatterData,
         content: contentWithoutFrontmatter,
-        url
+        url,
       };
 
       // Add to the 'all' collection
@@ -545,7 +556,7 @@ export const createFileFormatHandlers = ({
         } = extractFrontmatter(content);
 
         // Convert markdown to HTML
-        const htmlContent = md.render(contentWithoutFrontmatter);
+        const htmlContent = await md.renderAsync(contentWithoutFrontmatter);
 
         // Determine layout to use
         let layoutName; // Default to base template

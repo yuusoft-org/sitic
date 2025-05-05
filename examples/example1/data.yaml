@@ -8,12 +8,9 @@ og:
   type: website
   image: /public/sample1.jpg
 
-header:
-  logo:
-    src: /public/sample1.jpg
-    alt: Logo
-    width: 110
-    height: 20
+navbar:
+  title:
+    label: Sitic Template
 
 footer:
   logo:

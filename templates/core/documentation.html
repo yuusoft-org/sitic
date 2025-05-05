@@ -8,9 +8,12 @@
 <body class="dark">
   <rtgl-view bgc="su" w="f" ah="c" h="f">
     <rtgl-view d="h" w="f" h="f">
-      <rtgl-sidebar items="{{ docs.items | json-escaped }}"></rtgl-sidebar>
-      <rtgl-view flex="1" ah="c" h="100vh" sv id="content-container">
-        <rtgl-view md-w="100vw" w="720" ph="xl" >
+      <rtgl-view md-hidden h="100vh">
+        <rtgl-sidebar title="{{ docs.title | json-escaped }}" items="{{ docs.items | json-escaped }}"></rtgl-sidebar>
+      </rtgl-view>
+      <rtgl-view flex="1" ah="c" h="100vh">
+        <rtgl-view pv="l" md-w="100vw" w="720" ph="xl" sv id="content-container">
+          <rtgl-text s="h1" mb="m">{{ title }}</rtgl-text>
           {{ content }}
           <rtgl-view h="50vh"></rtgl-view>
         </rtgl-view>
